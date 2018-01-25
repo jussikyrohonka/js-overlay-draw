@@ -1,5 +1,16 @@
-body{ background-color: ivory; padding:20px; }
-canvas{border:1px solid red;}
+body{
+    background-color: ivory; padding:20px;
+}
+
+canvas{
+    border:1px solid red;
+    /*padding: 20px; */
+    margin: 20px;
+}
+
+canvas.hidden{
+    display: none;
+}
 
 #area {
     border: 2px;
