@@ -1,0 +1,44 @@
+body{ background-color: ivory; padding:20px; }
+canvas{border:1px solid red;}
+
+#area {
+    border: 2px;
+    background: green;
+}
+input {
+    border: 0px;
+}
+p.firstrow {
+    margin-top: 110px
+}
+p.secondrow {
+    margin-top: 110px
+}
+p.row {
+    #margin-top: 110px
+		     #top:20;
+    #margin: 20px;
+    padding: 5px;
+    height: 90px;
+    width: 200px;
+    border-color: "#BBBBBB";
+    border-radius: 8px;
+    border-width: 1px;
+}
+#rectangle {
+    width:60px;
+    height:60px;
+    background:#00f;
+    position:fixed;
+    top:0;
+    left:0;
+}
+.rectangle {
+    width:60px;
+    height:90px;
+    background:#000000;
+    //position:fixed;
+    top:30px;
+    //left:0;
+    #float:left;
+}
