@@ -134,7 +134,7 @@ function paintOverlay(image, canvasElement, color) {
     var ctx = canvasElement.getContext('2d');
 
     ctx.save(); // Push the current state to a stack
-    ctx.drawImage(image, 0, 0, 500, 253);
+    ctx.drawImage(image, 0, 0, canvasElement.width, canvasElement.height);
 
     // source-in: existing pixels will be overwritten
     ctx.globalCompositeOperation = 'source-in';
@@ -159,7 +159,9 @@ function start(imageArray) {
 
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    
     var canvas1 = document.getElementById('canvas1');
     var ctx1 = canvas1.getContext('2d');
 
@@ -179,20 +181,9 @@ function start(imageArray) {
     var imageData3 = paintOverlay(imageArray[3], canvas3, '#00FF00');
     var imageData4 = paintOverlay(imageArray[4], canvas4, '#0000FF');
     
-    ctx.drawImage(imageArray[0], 0, 0, 500, 253);
-    ctx.drawImage(canvas1, 0, 0, 500, 253);
-    ctx.drawImage(canvas2, 0, 0, 500, 253);
-    ctx.drawImage(canvas3, 0, 0, 500, 253);
-    ctx.drawImage(canvas4, 0, 0, 500, 253);
-    
-    //ctx1.drawImage(imageArray[1], 0, 0, 500, 253);
-    //ctx2.drawImage(imageArray[2], 0, 0, 500, 253);
-    //ctx3.drawImage(imageArray[3], 0, 0, 500, 253);
-    //ctx4.drawImage(imageArray[4], 0,0, 500, 253);
-    
-    // Draw the 'patches'
-    //ctx.putImageData(imageData1, 0, 0);
-    //ctx.putImageData(imageData2, 0, 0);
-    //ctx.putImageData(imageData3, 0, 0);
-    //ctx.putImageData(imageData4, 0, 0);
+    ctx.drawImage(imageArray[0], 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas1, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas2, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas3, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas4, 0, 0, canvasWidth, canvasHeight);
 }
