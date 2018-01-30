@@ -2,9 +2,9 @@ body{
     background-color: ivory; padding:20px;
 }
 
-canvas{
+canvas.jurmo {
     border:1px solid red;
-    /*padding: 20px; */
+    /* padding: 20px; */
     margin: 20px;
 }
 
