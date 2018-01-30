@@ -1,3 +1,11 @@
+/**
+ * 
+ * Adapted in part from
+ * https://stackoverflow.com/a/18387343
+ * https://stackoverflow.com/questions/18379818/canvas-image-masking-overlapping/18387343#18387343
+ */
+
+
 $(document).ready(function() {
     const initial72 = 'ff9900';
     const initial62 = 'ff9900';
@@ -12,6 +20,9 @@ $(document).ready(function() {
     $('p[for="color62"]').css('background-color', '#' + initial62);
     $('p[for="color49"]').css('background-color', '#' + initial49);
     $('p[for="color48"]').css('background-color', '#' + initial48);
+
+    // Initialise the canvas elements
+    loadCanvasData();
 });
 
 $('.row').click(function() {
@@ -51,7 +62,7 @@ $('input[name^="random"]').click(function(event) {
     const p = $('p[for="' + colorName + '"]');
     p.css('background-color', color);
 
-    setDivColor(colorpicker);
+    drawNewColors();
 
     return false; // Prevent default action and stop propagation
 });
@@ -59,7 +70,7 @@ $('input[name^="random"]').click(function(event) {
 $('#form').submit(function( event ) {
     //console.log("Handler for .submit() called." );
     event.preventDefault();
-    loadCanvasData();
+    drawNewColors();
 });
 
 
@@ -68,6 +79,11 @@ function jscolorchange(picker) {
     // Hide the picker when finished
     //console.log(picker);
     picker.jscolor.hide();
+}
+
+function jscolorFineChange(picker) {
+    setDivColor(picker);
+    //drawNewColors();
 }
 
 function setDivColor(picker) {
@@ -120,10 +136,6 @@ function imagesAllLoaded(imageCount, url, imageArray) {
     imagesLoaded++;
     console.log('Done loading ' + url);
     if (imagesLoaded == imageCount) {
-        // all images are fully loaded an ready to use
-        //truck=imgs[0];
-        //logo=imgs[1];
-        //overlay=imgs[2];
         initialiseCanvasElements(imageArray);
     } else {
 	console.log('No yet ready');
@@ -153,8 +165,6 @@ function initialiseCanvasElements(imageArray) {
     initialisePatternCanvas(imageArray[2], canvas2);
     initialisePatternCanvas(imageArray[3], canvas3);
     initialisePatternCanvas(imageArray[4], canvas4);
-
-    drawNewColors();
 }
 
 function initialisePatternCanvas(image, canvasElement) {
