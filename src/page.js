@@ -57,9 +57,9 @@ $('input[name^="random"]').click(function(event) {
 });
 
 $('#form').submit(function( event ) {
-    console.log("Handler for .submit() called." );
+    //console.log("Handler for .submit() called." );
     event.preventDefault();
-    updateCanvas();
+    loadCanvasData();
 });
 
 
@@ -84,9 +84,10 @@ function setDivColor(picker) {
 
 var imagesLoaded = 0;
 
-function updateCanvas() {
-    console.log('updateCanvas()');
+function loadCanvasData() {
+    console.log('loadCanvasData()');
     
+    imagesLoaded = 0;
     var urlArray = [];
 
     urlArray.push('jurmo-white.png');
@@ -97,10 +98,10 @@ function updateCanvas() {
     
     var imageArray = [];
     
-    loadAllImages(urlArray, imageArray);
+    loadImages(urlArray, imageArray);
 }
 
-function loadAllImages(imageUrlArray, imageArray) {
+function loadImages(imageUrlArray, imageArray) {
     var imageCount = imageUrlArray.length;
     for (var ii = 0; ii < imageUrlArray.length; ii++) {
 	var imageUrl = imageUrlArray[ii];
@@ -114,7 +115,6 @@ function loadAllImages(imageUrlArray, imageArray) {
     }
 }
 
-//    var imagesAllLoaded = function() {
 function imagesAllLoaded(imageCount, url, imageArray) {
     // One more image loaded
     imagesLoaded++;
@@ -124,17 +124,93 @@ function imagesAllLoaded(imageCount, url, imageArray) {
         //truck=imgs[0];
         //logo=imgs[1];
         //overlay=imgs[2];
-        start(imageArray);
+        initialiseCanvasElements(imageArray);
     } else {
 	console.log('No yet ready');
     }
 };
 
-function paintOverlay(image, canvasElement, color) {
+function initialiseCanvasElements(imageArray) {
+    console.log('initialiseCanvasElements()' + imageArray);
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    
+    // The first image should be the background
+    // This will be visible and remain constant
+    ctx.drawImage(imageArray[0], 0, 0, canvasWidth, canvasHeight);
+
+    // Prepare the hidden canvas element with the 4
+    // different overlay patterns: the different paint areas
+    var canvas1 = document.getElementById('canvas1');
+    var canvas2 = document.getElementById('canvas2');
+    var canvas3 = document.getElementById('canvas3');
+    var canvas4 = document.getElementById('canvas4');
+    
+    initialisePatternCanvas(imageArray[1], canvas1);
+    initialisePatternCanvas(imageArray[2], canvas2);
+    initialisePatternCanvas(imageArray[3], canvas3);
+    initialisePatternCanvas(imageArray[4], canvas4);
+
+    drawNewColors();
+}
+
+function initialisePatternCanvas(image, canvasElement) {
+    var ctx = canvasElement.getContext('2d');
+    ctx.save(); // Push the current state to a stack
+    ctx.drawImage(image, 0, 0, canvasElement.width, canvasElement.height);
+    ctx.restore();
+}
+
+/**
+ * Draw new selected colors onto the overlay images
+ * and combine the overlays into the result image.
+ */
+function drawNewColors() {
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    
+    var canvas1 = document.getElementById('canvas1');
+    var canvas2 = document.getElementById('canvas2');
+    var canvas3 = document.getElementById('canvas3');
+    var canvas4 = document.getElementById('canvas4');
+    
+    const color48 = '#' + $('#color48')[0].jscolor.toString();
+    const color49 = '#' + $('#color49')[0].jscolor.toString();
+    const color62 = '#' + $('#color62')[0].jscolor.toString();
+    const color72 = '#' + $('#color72')[0].jscolor.toString();
+    console.log(color48, color49, color62, color72);
+    /*
+    paintOverlay(canvas1, '#FF9900');
+    paintOverlay(canvas2, '#ff9900');
+    paintOverlay(canvas3, '#00FF00');
+    paintOverlay(canvas4, '#0000FF');
+     */
+
+    paintOverlay(canvas1, color48);
+    paintOverlay(canvas2, color49);
+    paintOverlay(canvas3, color72);
+    paintOverlay(canvas4, color62);
+    /*
+    */
+    
+    ctx.drawImage(canvas1, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas2, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas3, 0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(canvas4, 0, 0, canvasWidth, canvasHeight);
+}
+
+/**
+ * Paint 
+ */
+function paintOverlay(canvasElement, color) {
     var ctx = canvasElement.getContext('2d');
 
     ctx.save(); // Push the current state to a stack
-    ctx.drawImage(image, 0, 0, canvasElement.width, canvasElement.height);
 
     // source-in: existing pixels will be overwritten
     ctx.globalCompositeOperation = 'source-in';
@@ -144,46 +220,6 @@ function paintOverlay(image, canvasElement, color) {
     // destination-atop: new drawing will not overwrite existing pixels
     //ctx.globalCompositeOperation = 'destination-atop';
     
-    //ctx.drawImage(logo);
-    //ctx.drawImage(truck);
-    
-    ctx.restore();
-    //var data = ctx.getImageData(0, 0,
-    //			    canvasElement.width,
-    //			    canvasElement.height);
-    //return data;
+    ctx.restore(); // Restore the old context state
 }
 
-function start(imageArray) {
-    console.log('start()' + imageArray);
-
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
-    
-    var canvas1 = document.getElementById('canvas1');
-    var ctx1 = canvas1.getContext('2d');
-
-    var canvas2 = document.getElementById('canvas2');
-    var ctx2 = canvas2.getContext('2d');
-
-    var canvas3 = document.getElementById('canvas3');
-    var ctx3 = canvas3.getContext('2d');
-
-    var canvas4 = document.getElementById('canvas4');
-    var ctx4 = canvas4.getContext('2d');
-
-    ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    var imageData1 = paintOverlay(imageArray[1], canvas1, '#000000');
-    var imageData2 = paintOverlay(imageArray[2], canvas2, '#FF0000');
-    var imageData3 = paintOverlay(imageArray[3], canvas3, '#00FF00');
-    var imageData4 = paintOverlay(imageArray[4], canvas4, '#0000FF');
-    
-    ctx.drawImage(imageArray[0], 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas1, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas2, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas3, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas4, 0, 0, canvasWidth, canvasHeight);
-}
