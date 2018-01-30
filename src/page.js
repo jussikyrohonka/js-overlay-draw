@@ -193,25 +193,33 @@ function drawNewColors() {
     const color49 = '#' + $('#color49')[0].jscolor.toString();
     const color62 = '#' + $('#color62')[0].jscolor.toString();
     const color72 = '#' + $('#color72')[0].jscolor.toString();
-    console.log(color48, color49, color62, color72);
-    /*
-    paintOverlay(canvas1, '#FF9900');
-    paintOverlay(canvas2, '#ff9900');
-    paintOverlay(canvas3, '#00FF00');
-    paintOverlay(canvas4, '#0000FF');
-     */
+    //console.log(color48, color49, color62, color72);
 
     paintOverlay(canvas1, color48);
     paintOverlay(canvas2, color49);
     paintOverlay(canvas3, color72);
     paintOverlay(canvas4, color62);
-    /*
-    */
     
     ctx.drawImage(canvas1, 0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(canvas2, 0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(canvas3, 0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(canvas4, 0, 0, canvasWidth, canvasHeight);
+}
+
+/**
+ * Draw an individual new color
+ */
+function drawNewColor(newColor, canvasId) {
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var targetWidth = canvas.width;
+    var targetHeight = canvas.height;
+    
+    var canvas = document.getElementById(canvasId);
+    paintOverlay(canvas, newColor);
+    
+    // Update the composite image
+    ctx.drawImage(canvas, 0, 0, targetWidth, targetHeight);
 }
 
 /**
