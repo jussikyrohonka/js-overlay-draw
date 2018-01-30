@@ -62,7 +62,7 @@ $('input[name^="random"]').click(function(event) {
     const p = $('p[for="' + colorName + '"]');
     p.css('background-color', color);
 
-    drawNewColors();
+    updateColor(colorName, color);
 
     return false; // Prevent default action and stop propagation
 });
@@ -74,6 +74,23 @@ $('#form').submit(function( event ) {
 });
 
 
+function updateColor(colorName, newColor) {
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    
+    if (colorName === 'color48') {
+	drawNewColor(ctx, canvasWidth, canvasHeight, newColor, 'canvas1');
+    } else if (colorName === 'color49') {
+	drawNewColor(ctx, canvasWidth, canvasHeight, newColor, 'canvas2');
+    } else if (colorName === 'color62') {
+	drawNewColor(ctx, canvasWidth, canvasHeight, newColor, 'canvas3');
+    } else if (colorName === 'color72') {
+	drawNewColor(ctx, canvasWidth, canvasHeight, newColor, 'canvas4');
+    }
+}
+
 
 function jscolorchange(picker) {
     // Hide the picker when finished
@@ -81,9 +98,13 @@ function jscolorchange(picker) {
     picker.jscolor.hide();
 }
 
-function jscolorFineChange(picker) {
+function jscolorFineChange(picker, colorName) {
+    // Update the selector background
     setDivColor(picker);
-    //drawNewColors();
+    
+    // Update the individual color on the fly
+    const newColor = '#' + picker.toString();
+    updateColor(colorName, newColor);
 }
 
 function setDivColor(picker) {
@@ -92,9 +113,6 @@ function setDivColor(picker) {
     const inputId = picker.valueElement.id;
     const p = $('p[for="' + inputId + '"]');
     p.css('background-color', '#' + picker.toString());
-    
-    const div = $('#area');
-    div.css('background-color', '#' + picker.toString());
 }
 
 
@@ -184,37 +202,22 @@ function drawNewColors() {
     var canvasWidth = canvas.width;
     var canvasHeight = canvas.height;
     
-    var canvas1 = document.getElementById('canvas1');
-    var canvas2 = document.getElementById('canvas2');
-    var canvas3 = document.getElementById('canvas3');
-    var canvas4 = document.getElementById('canvas4');
-    
     const color48 = '#' + $('#color48')[0].jscolor.toString();
     const color49 = '#' + $('#color49')[0].jscolor.toString();
     const color62 = '#' + $('#color62')[0].jscolor.toString();
     const color72 = '#' + $('#color72')[0].jscolor.toString();
     //console.log(color48, color49, color62, color72);
 
-    paintOverlay(canvas1, color48);
-    paintOverlay(canvas2, color49);
-    paintOverlay(canvas3, color72);
-    paintOverlay(canvas4, color62);
-    
-    ctx.drawImage(canvas1, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas2, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas3, 0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(canvas4, 0, 0, canvasWidth, canvasHeight);
+    drawNewColor(ctx, canvasWidth, canvasHeight, color48, 'canvas1');
+    drawNewColor(ctx, canvasWidth, canvasHeight, color49, 'canvas2');
+    drawNewColor(ctx, canvasWidth, canvasHeight, color62, 'canvas3');
+    drawNewColor(ctx, canvasWidth, canvasHeight, color72, 'canvas4');
 }
 
 /**
  * Draw an individual new color
  */
-function drawNewColor(newColor, canvasId) {
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var targetWidth = canvas.width;
-    var targetHeight = canvas.height;
-    
+function drawNewColor(ctx, targetWidth, targetHeight, newColor, canvasId) {
     var canvas = document.getElementById(canvasId);
     paintOverlay(canvas, newColor);
     
