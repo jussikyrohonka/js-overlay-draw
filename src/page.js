@@ -67,12 +67,6 @@ $('input[name^="random"]').click(function(event) {
     return false; // Prevent default action and stop propagation
 });
 
-$('#form').submit(function( event ) {
-    //console.log("Handler for .submit() called." );
-    event.preventDefault();
-    drawNewColors();
-});
-
 
 function updateColor(colorName, newColor) {
     var canvas = document.getElementById('canvas');
