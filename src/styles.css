@@ -1,9 +1,10 @@
 body{
-    background-color: ivory; padding:20px;
+    /* background-color: ivory; */
+    padding:20px;
 }
 
 canvas.jurmo {
-    border:1px solid red;
+    /* border:1px solid red; */
     /* padding: 20px; */
     margin: 20px;
 }
