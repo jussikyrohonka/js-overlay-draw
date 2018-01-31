@@ -69,7 +69,7 @@ $('input[name^="random"]').click(function(event) {
 
 
 function updateColor(colorName, newColor) {
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('canvas0');
     var ctx = canvas.getContext('2d');
     var canvasWidth = canvas.width;
     var canvasHeight = canvas.height;
@@ -83,8 +83,18 @@ function updateColor(colorName, newColor) {
     } else if (colorName === 'color72') {
 	drawNewColor(ctx, canvasWidth, canvasHeight, newColor, 'canvas4');
     }
+    
+    updateVisibleCanvas(canvas);
 }
 
+function updateVisibleCanvas(sourceCanvasElement) {
+    var visibleCanvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var canvasWidth = canvas.width;
+    var canvasHeight = canvas.height;
+    
+    ctx.drawImage(sourceCanvasElement, 0, 0, canvasWidth, canvasHeight);
+}
 
 function jscolorchange(picker) {
     // Hide the picker when finished
@@ -238,3 +248,9 @@ function paintOverlay(canvasElement, color) {
     ctx.restore(); // Restore the old context state
 }
 
+
+function fullsizeClick() {
+    var canvas = document.getElementById('canvas0');
+    var dataUrl = canvas.toDataURL();
+    window.open(dataUrl, '_blank');
+}
