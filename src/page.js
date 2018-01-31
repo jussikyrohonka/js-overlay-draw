@@ -178,11 +178,13 @@ function initialiseCanvasElements(imageArray) {
 
     // Prepare the hidden canvas element with the 4
     // different overlay patterns: the different paint areas
+    var canvas0 = document.getElementById('canvas0');
     var canvas1 = document.getElementById('canvas1');
     var canvas2 = document.getElementById('canvas2');
     var canvas3 = document.getElementById('canvas3');
     var canvas4 = document.getElementById('canvas4');
     
+    initialisePatternCanvas(imageArray[0], canvas0);
     initialisePatternCanvas(imageArray[1], canvas1);
     initialisePatternCanvas(imageArray[2], canvas2);
     initialisePatternCanvas(imageArray[3], canvas3);
@@ -250,7 +252,18 @@ function paintOverlay(canvasElement, color) {
 
 
 function fullsizeClick() {
-    var canvas = document.getElementById('canvas0');
-    var dataUrl = canvas.toDataURL();
-    window.open(dataUrl, '_blank');
+    var jqueryElement = $('#fullsize');
+    if (!jqueryElement.is(":visible")) {
+	var canvas = document.getElementById('canvas0');
+	var dataUrl = canvas.toDataURL();
+	var image = new Image();
+	image.src = dataUrl;
+	var dummyHtml = image.outerHTML;
+	jqueryElement.html(dummyHtml);
+	jqueryElement.show();
+	$('#fullsizeButton').text('Hide full size');
+    } else {
+	jqueryElement.hide();
+	$('#fullsizeButton').text('Show full size');
+    }
 }

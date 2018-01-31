@@ -53,3 +53,7 @@ p.row {
     //left:0;
     #float:left;
 }
+
+#fullsize {
+    display: none;
+}
