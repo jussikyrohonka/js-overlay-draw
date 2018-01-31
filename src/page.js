@@ -7,10 +7,10 @@
 
 
 $(document).ready(function() {
-    const initial72 = 'ff9900';
-    const initial62 = 'ff9900';
-    const initial49 = 'ff9900';
-    const initial48 = 'ff9900';
+    const initial72 = 'eeeeee';
+    const initial62 = 'eeeeee';
+    const initial49 = 'eeeeee';
+    const initial48 = 'eeeeee';
     $('#color72')[0].jscolor.fromString(initial72);
     $('#color62')[0].jscolor.fromString(initial62);
     $('#color49')[0].jscolor.fromString(initial49);
