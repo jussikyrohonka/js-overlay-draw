@@ -1,6 +1,10 @@
 body{
     /* background-color: ivory; */
     padding:20px;
+    background-image: url("/jurmo/jurmo-white.png");
+    #background-size: 1000px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 canvas.jurmo {
