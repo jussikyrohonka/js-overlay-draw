@@ -252,14 +252,8 @@ function paintOverlay(canvasElement, color) {
 
 
 function fullsizeClick() {
-    var jqueryElement = $('#fullsize');
+    var jqueryElement = $('#canvas0');
     if (!jqueryElement.is(":visible")) {
-	var canvas = document.getElementById('canvas0');
-	var dataUrl = canvas.toDataURL();
-	var image = new Image();
-	image.src = dataUrl;
-	var dummyHtml = image.outerHTML;
-	jqueryElement.html(dummyHtml);
 	jqueryElement.show();
 	$('#fullsizeButton').text('Hide full size');
     } else {
