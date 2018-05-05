@@ -68,6 +68,47 @@ $('input[name^="random"]').click(function(event) {
 });
 
 
+/**
+ * React to paint color selections
+ * Get Hex color, set the value of the indicated Jurmo color
+ */
+$('button[name^="paint"]').click(function(event) {
+    //alert('Paint selected');
+    var button = event.target;
+    var rgb = button.style["background-color"];
+    var hexColor = rgbToHex(rgb);
+    
+    //console.log(hexColor);
+    //const colorName = 'color' + $('#paint-target')[0].value;
+    const colorName = 'color' + $('input[name=jurmo-paint]:checked').val();
+    
+    // Update the color picker value
+    const colorpicker = $('#' + colorName)[0].jscolor;
+    colorpicker.fromString(hexColor);
+    
+    // Update the backgound
+    const p = $('p[for="' + colorName + '"]');
+    p.css('background-color', hexColor);
+    
+    updateColor(colorName, hexColor);
+});
+
+
+function rgbToHex(rgb) {
+    var rgbValues = rgb.substr(4, rgb.indexOf(')') - 4);
+    var rgbArray = rgbValues.split(',');
+    // Map rgb values to hex
+    var rgbArrayAsHex = rgbArray.map(function(colorValue) {
+	var hexValue = parseInt(colorValue).toString(16);
+	var zeroPadded = ("00" + hexValue).slice(-2) // 'Append string, get last two chars'
+	return zeroPadded.toUpperCase();
+	//return hexValue.toUpperCase();
+    });
+    // Join hex values with a '#'
+    var hexColorValue = '#' + rgbArrayAsHex.join('');
+    return hexColorValue;
+}
+
 function updateColor(colorName, newColor) {
     var canvas = document.getElementById('canvas0');
     var ctx = canvas.getContext('2d');
@@ -160,7 +201,7 @@ function imagesAllLoaded(imageCount, url, imageArray) {
     if (imagesLoaded == imageCount) {
         initialiseCanvasElements(imageArray);
     } else {
-	console.log('No yet ready');
+	console.log('Not yet ready');
     }
 };
 

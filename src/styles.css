@@ -62,3 +62,7 @@ p.row {
 #fullsize {
     display: none;
 }
+
+td.paint-select {
+    width: 220px;
+}
