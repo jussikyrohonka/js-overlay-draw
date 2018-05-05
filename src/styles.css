@@ -63,6 +63,10 @@ p.row {
     display: none;
 }
 
+table.paint-select {
+    background-color: ffffff;
+}
+
 td.paint-select {
     width: 220px;
 }
